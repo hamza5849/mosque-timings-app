@@ -1,16 +1,15 @@
 /* === Global Styling === */
-body {
-  /* Background image from /public folder */
-  background-image: url("/MOSQUE.jpg");
-  background-size: cover;          /* Make it cover entire screen */
-  background-position: center;     /* Center the image */
-  background-repeat: no-repeat;    /* Prevent tiling */
-  min-height: 100vh;               /* Ensure full viewport height */
+body, html {
+  height: 100%;
+  margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: white;                    /* Default text color */
+  color: white;
+  /* Custom background image because Bootstrap can't set exact image */
+  background: url("/MOSQUE.jpg") center center / cover no-repeat;
+  position: relative;
 }
 
-/* Dark overlay to make text more readable */
+/* Dark overlay using pseudo-element (Bootstrap cannot do custom rgba overlay on body) */
 body::before {
   content: "";
   position: fixed;
@@ -18,39 +17,19 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.55); /* Semi-transparent black */
-  z-index: -1;                     /* Stay behind content */
+  background: rgba(0, 0, 0, 0.55);
+  z-index: -1;
 }
 
-/* Navbar brand font tweaks */
-.navbar-brand {
-  font-size: 1.5rem;
-  letter-spacing: 1px;
-}
+/* Navbar brand tweaks (optional, could be done with Bootstrap classes) */
 
-/* DateBox positioning (Bootstrap can’t replace this absolute placement) */
-.date-box {
-  position: absolute;
-  top: 80px;   /* Push below navbar */
-  left: 20px;  /* Margin from left */
-  width: 10rem;
-  height: 8rem;
-}
 
-/* Result card custom width (Bootstrap doesn’t allow fixed px width easily) */
-.result-card {
-  width: 420px;
-  border-radius: 12px;  /* Slight rounded corners */
-  overflow: hidden;     /* Clip children if needed */
-}
-
-/* Result card header custom color (Bootstrap lacks this exact shade) */
-.result-card .card-header {
-  background-color: #91ADC8 !important; /* Bluish header */
-  color: #fff !important;               /* White text */
-}
-
-/* Table background inside cards (Bootstrap only has solid colors, so CSS used) */
-.table {
-  background: rgba(255, 255, 255, 0.95);
+/* Responsive adjustments if needed */
+@media (max-width: 768px) {
+  .date-box {
+    margin: 0 auto 1rem auto; /* Center DateBox */
+  }
+  .result-card {
+    max-width: 100%; /* Make ResultCard full width on small screens */
+  }
 }

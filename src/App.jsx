@@ -1,25 +1,31 @@
 // src/App.jsx
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState } from "react"; // Import React and useState hook
+import axios from "axios"; // Import axios for API calls
 
-// Importing components
+// Importing Components
 import Navbar from "./components/Navbar";
 import DateBox from "./components/DateBox";
 import SearchDropdown from "./components/SearchDropdown";
 import ResultCard from "./components/ResultCard";
 
-// Import global CSS (App.css will handle background image)
+
+
+// Import custom CSS (only necessary overrides)
 import "./App.css";
 
 function App() {
-  // === State Management ===
+  // State to store search results
   const [searchResult, setSearchResult] = useState(null);
+  // State to store prayer times from API
   const [prayerTimes, setPrayerTimes] = useState(null);
+  // State to store date info
   const [dates, setDates] = useState(null);
+  // State to indicate loading
   const [loading, setLoading] = useState(false);
+  // State to store error messages
   const [error, setError] = useState("");
 
-  // === Local fallback date (if API not called yet) ===
+  // Fallback for today’s date if no API call yet
   const today = new Date();
   const formattedDates = {
     gregorian: today.toLocaleDateString("en-US", {
@@ -34,64 +40,84 @@ function App() {
     }),
   };
 
-  // === Fetch data from AlAdhan API ===
+  // Function to fetch prayer times using API
   const handleSearch = async ({ city, country }) => {
-    setLoading(true);
-    setError("");
+    setLoading(true); // Show loading spinner/text
+    setError(""); // Reset previous errors
 
     try {
+      // Axios GET request to AlAdhan API
       const response = await axios.get(
         `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}`
       );
-
       const data = response.data.data;
 
-      // Save search results
+      // Store results in states
       setSearchResult({ city, country });
       setPrayerTimes(data.timings);
       setDates({
         gregorian: `${data.date.gregorian.day} ${data.date.gregorian.month.en} ${data.date.gregorian.year}`,
         hijri: `${data.date.hijri.day} ${data.date.hijri.month.en} ${data.date.hijri.year} AH`,
       });
-    } catch (err) {
-      setError(" Check your city/country.");
+    } catch {
+      // Handle API error
+      setError("Check your city/country.");
       setSearchResult(null);
       setPrayerTimes(null);
       setDates(null);
     }
 
-    setLoading(false);
+    setLoading(false); // Hide loading spinner/text
   };
 
   return (
-    // Main wrapper (background is handled in App.css)
-    <div className="min-vh-100 d-flex flex-column">
-      {/* === Navbar === */}
+    <div
+      className="min-vh-100 d-flex flex-column text-white position-relative"
+      style={{
+        // Custom background image (Bootstrap cannot handle custom images)
+        backgroundImage: 'url("/MOSQUE.jpg")',
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      {/* Dark overlay for better contrast */}
+      <div className="position-absolute w-100 h-100 bg-dark bg-opacity-50"></div>
+
+      {/* Navbar at top */}
       <Navbar />
 
-      {/* === Page Content === */}
-      <div className="container-fluid mt-4 text-white">
+      {/* Page Content */}
+      <div className="position-relative z-1 container mt-5">
+        {/* Page Title */}
+        <h1 className="text-center mb-4 display-5">Mosque Prayer Timings</h1>
+
         <div className="row">
-          {/* Left Side: Date Box */}
-          <div className="col-12 col-md-3 mb-3">
-            <DateBox dates={dates || formattedDates} />
+          {/* Left Column: DateBox */}
+          <div className="col-12 col-md-3 mb-4 d-flex justify-content-center">
+            {/* Wrapper to maintain fixed height */}
+            <div className="d-flex align-items-start" style={{ minHeight: "200px" }}>
+              <DateBox dates={dates || formattedDates} />
+            </div>
           </div>
 
-          {/* Right Side: Search + Results */}
+          {/* Right Column: Search + Results */}
           <div className="col-12 col-md-9">
             {/* Search Dropdown */}
-            <div className="mb-3">
+            <div className="mb-4">
               <SearchDropdown onSearch={handleSearch} />
             </div>
 
-            {/* Loading Indicator */}
-            {loading && <p className="text-info">loading...</p>}
+            {/* Loading indicator */}
+            {loading && (
+              <p className="text-center text-info fw-bold">Loading...</p>
+            )}
 
-            {/* Error Message */}
+            {/* Error message */}
             {error && <div className="alert alert-danger">{error}</div>}
 
-            {/* Result Card */}
-            {searchResult && (
+            {/* Display result card */}
+            {searchResult && prayerTimes && (
               <div className="d-flex justify-content-center">
                 <ResultCard
                   city={searchResult.city}
