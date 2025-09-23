@@ -9,17 +9,18 @@ A minimal, single-page **React** application that displays daily prayer times fo
 - Search by **City** and **Country**.
 - Display daily prayer times: **Fajr, Dhuhr, Asr, Maghrib, Isha**.
 - Show today’s **Gregorian and Hijri date**.
-- Responsive design using **Bootstrap grid**.
-- Loading indicator and error handling for invalid input.
+- Responsive design using **Bootstrap grid system**.
+- Loading indicator while fetching data.
+- Error handling for invalid city/country input.
 
 ---
 
 ## **Tech Stack**
 
-- **React** (Functional Components + Hooks)
-- **Axios** (API calls)
-- **Bootstrap** (Layout & Styling)
-- **AlAdhan API** for prayer times
+- **React** (Functional Components + Hooks)  
+- **Axios** (For API calls)  
+- **Bootstrap** (Layout & Styling)  
+- **AlAdhan API** (Prayer times)
 
 ---
 
@@ -35,5 +36,5 @@ A minimal, single-page **React** application that displays daily prayer times fo
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/hamza5849/majoomawelfare.git
-cd majoomawelfare
+git clone https://github.com/hamza5849/prayer-times-app.git
+cd prayer-times-app
