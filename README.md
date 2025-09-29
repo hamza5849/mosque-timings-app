@@ -1,4 +1,4 @@
-# 🕌 Mosque Prayer Times App
+#  Mosque Prayer Times App
 
 A minimal, single-page **React** application that displays daily prayer times for a selected city using the **AlAdhan API**. Built with **React functional components, Axios, and Bootstrap** for styling.
 
@@ -24,16 +24,7 @@ A minimal, single-page **React** application that displays daily prayer times fo
 
 ---
 
-## **Demo**
 
-**Live Demo:** [Click here to view](https://YOUR_VERCEL_LINK_HERE)  
-
-![Screenshot](./screenshot.png)  
-*(Replace with an actual screenshot of your website if available)*
-
----
-
-## **Installation**
 
 Follow these steps to run the project locally:
 
